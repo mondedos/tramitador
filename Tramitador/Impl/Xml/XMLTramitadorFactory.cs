@@ -42,7 +42,7 @@ namespace Tramitador.Impl.Xml
         public IFlujograma ObtenerFlujograma(string entidad, int idEntidad)
         {
             XmlSerializer s = new XmlSerializer(typeof(XMLFlujograma));
-
+            
             IFlujograma solucion=null;
 
             using (TextReader r = new StreamReader(string.Format("{0}.xml", entidad)))
@@ -51,11 +51,34 @@ namespace Tramitador.Impl.Xml
 
                 if (solucion.IdEntidad != idEntidad)
                     solucion = null;
+                else
+                {
+                    RellenarFlujogramasNull(solucion);
+                }
 
                 r.Close();
             }
 
             return solucion;
+        }
+
+        private void RellenarFlujogramasNull(IFlujograma solucion)
+        {
+            foreach (var item in solucion.Transiciones)
+            {
+                if (item.Flujograma == null)
+                {
+                    item.Flujograma = solucion;
+                }
+                RellenarFlujogramasNull(solucion, item.Origen);
+                RellenarFlujogramasNull(solucion, item.Destino);
+            }
+        }
+
+        private void RellenarFlujogramasNull(IFlujograma solucion, IEstado iEstado)
+        {
+            if (iEstado.Flujograma == null)
+                iEstado.Flujograma = solucion;
         }
 
         public IEstado CreateEstado(IFlujograma flujograma)

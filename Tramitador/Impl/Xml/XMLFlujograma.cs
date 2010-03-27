@@ -39,11 +39,16 @@ namespace Tramitador.Impl.Xml
 
         public void Add(ITransicion transicion)
         {
+            if (!transicion.Flujograma.Equals(this))
+                throw new NoMismoFlujogramaException();
+
             if (transicion is XMLTransicion)
             {
                 XMLTransicion tr = transicion as XMLTransicion;
                 if (!_transiciones.Contains(tr))
+                {
                     _transiciones.Add(tr);
+                }
             }
         }
 
