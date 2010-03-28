@@ -16,6 +16,12 @@ namespace Tramitador
         string Nombre { get; set; }
 
         void Add(ITransicion transicion);
+        /// <summary>
+        /// Indica si se puede realizar una transicion en nuestro flujograma
+        /// </summary>
+        /// <param name="transion">transicion</param>
+        /// <returns>Cierto si es posible realizar la transicon</returns>
+        bool EsValido(ITransicion transion);
 
          ITransicion[] Transiciones { get; }
     }

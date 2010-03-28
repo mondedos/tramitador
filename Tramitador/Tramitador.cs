@@ -23,6 +23,9 @@ namespace Tramitador
      public ITransicion CurrentTransicion { get; private set; }
 
 
-
+     public bool Realizar(ITransicion transicon)
+     {
+         throw new NotImplementedException();
+     }
     }
 }

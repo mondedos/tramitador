@@ -75,5 +75,15 @@ namespace Tramitador.Impl.Xml
                 _transiciones = new List<XMLTransicion>(value);
             }
         }
+
+        #region IFlujograma Members
+
+
+        public bool EsValido(ITransicion transion)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

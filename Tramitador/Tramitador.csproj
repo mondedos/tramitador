@@ -55,6 +55,7 @@
     <Compile Include="Impl\Xml\XMLFlujograma.cs" />
     <Compile Include="Impl\Xml\XMLTramitadorFactory.cs" />
     <Compile Include="Impl\Xml\XMLTransicion.cs" />
+    <Compile Include="IProceso.cs" />
     <Compile Include="ITransicion.cs" />
     <Compile Include="NoMismoFlujogramaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
