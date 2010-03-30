@@ -43,12 +43,15 @@ namespace Tramitador.Impl.Xml
             if (!transicion.Flujograma.Equals(this))
                 throw new NoMismoFlujogramaException();
 
+            if(!_estados.Contains(XMLEstado.Tranformar(transicion.Origen)) 
+                || !_estados.Contains(XMLEstado.Tranformar(transicion.Destino)))
+                throw new NoSuchElementException();
+
             XMLTransicion tr = XMLTransicion.Transformar(transicion);
             if (!_transiciones.Contains(tr))
             {
                 _transiciones.Add(tr);
             }
-
         }
 
         #endregion

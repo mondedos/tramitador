@@ -88,7 +88,18 @@ namespace Tramitador.Impl.Xml
 
         public IEstado ObtenerEstado(IFlujograma flujograma, int estado)
         {
-            throw new NotImplementedException();
+            IEstado sol = null;
+
+            foreach (var est in flujograma.Estados)
+            {
+                if (est.Estado == estado)
+                {
+                    sol = est;
+                    break;
+                }
+            }
+
+            return sol;
         }
 
         public ITransicion CreateTransicion(IEstado origen, IEstado destino)
