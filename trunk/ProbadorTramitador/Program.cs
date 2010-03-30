@@ -11,7 +11,7 @@ namespace ProbadorTramitador
     {
         static void Main(string[] args)
         {
-            XMLTramitadorFactory fact = new XMLTramitadorFactory();
+            ITramitadorFactory fact = new XMLTramitadorFactory();
 
             IFlujograma flujo = fact.ObtenerFlujograma("Mi entidad",0);
 
@@ -19,18 +19,22 @@ namespace ProbadorTramitador
             //flujo.Entidad = "Mi entidad";
 
 
-            //IEstado origen = fact.CreateEstado(flujo);
+            IEstado origen = fact.CreateEstado(flujo);
 
-            //origen.Descripcion = "Estado inicial";
+            origen.Descripcion = "Estado inicial";
 
 
-            //IEstado destino = fact.CreateEstado(flujo);
+            IEstado destino = fact.CreateEstado(flujo);
 
-            //destino.Descripcion = "Estado final";
+            destino.Descripcion = "Estado final";
 
-            //ITransicion tr = fact.CreateTransicion(origen, destino);
+            ITransicion tr = fact.CreateTransicion(origen, destino);
 
-            //flujo.Add(tr);
+            flujo.Add(origen);
+
+            flujo.Add(destino);
+
+            flujo.Add(tr);
 
             //fact.Almacenar(flujo);
         }
