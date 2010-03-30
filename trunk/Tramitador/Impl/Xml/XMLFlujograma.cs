@@ -10,6 +10,7 @@ namespace Tramitador.Impl.Xml
     {
 
         private List<XMLTransicion> _transiciones = new List<XMLTransicion>();
+        private List<XMLEstado> _estados = new List<XMLEstado>();
 
         #region IFlujograma Members
 
@@ -42,14 +43,12 @@ namespace Tramitador.Impl.Xml
             if (!transicion.Flujograma.Equals(this))
                 throw new NoMismoFlujogramaException();
 
-            if (transicion is XMLTransicion)
+            XMLTransicion tr = XMLTransicion.Transformar(transicion);
+            if (!_transiciones.Contains(tr))
             {
-                XMLTransicion tr = transicion as XMLTransicion;
-                if (!_transiciones.Contains(tr))
-                {
-                    _transiciones.Add(tr);
-                }
+                _transiciones.Add(tr);
             }
+
         }
 
         #endregion
@@ -81,7 +80,44 @@ namespace Tramitador.Impl.Xml
 
         public bool EsValido(ITransicion transion)
         {
-            throw new NotImplementedException();
+            return _transiciones.Contains(XMLTransicion.Transformar(transion));
+        }
+
+        #endregion
+
+        #region IFlujograma Members
+
+
+        public void Add(IEstado estado)
+        {
+            _estados.Add(XMLEstado.Tranformar(estado));
+        }
+
+        public IEstado Remove(IEstado estado)
+        {
+            IEstado sol = null;
+
+            if (_estados.Remove(Xml.XMLEstado.Tranformar(estado)))
+                sol = estado;
+
+            return sol;
+        }
+        [XmlIgnore]
+        public IEstado[] Estados
+        {
+            get { return _estados.ToArray(); }
+        }
+
+        public XMLEstado[] XMLEstados
+        {
+            get
+            {
+                return _estados.ToArray();
+            }
+            set
+            {
+                _estados = new List<XMLEstado>(value);
+            }
         }
 
         #endregion

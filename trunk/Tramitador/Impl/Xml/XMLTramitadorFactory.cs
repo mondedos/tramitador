@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Tramitador.Impl.Xml
 {
-    public class XMLTramitadorFactory
+    public class XMLTramitadorFactory : ITramitadorFactory
     {
         public IFlujograma CreateFlujograma()
         {
