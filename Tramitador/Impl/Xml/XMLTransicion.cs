@@ -11,27 +11,21 @@ namespace Tramitador.Impl.Xml
     {
         #region ITransicion Members
         [XmlIgnore]
-        public IEstado Origen { get {
-            return XMLOrigen;
-        }
-            set { XMLOrigen = value as XMLEstado; }
+        public IEstado Origen
+        {
+            get { return XMLOrigen; }
+            set { XMLOrigen = XMLEstado.Tranformar(value); }
         }
         [XmlIgnore]
         public IEstado Destino
         {
-            get
-            {
-                return XMLDestino;
-            }
-            set
-            {
-                XMLDestino = value as XMLEstado;
-            }
+            get { return XMLDestino; }
+            set { XMLDestino = XMLEstado.Tranformar(value); }
         }
 
-       
+
         public XMLEstado XMLOrigen { get; set; }
-        
+
         public XMLEstado XMLDestino { get; set; }
 
 
@@ -61,6 +55,28 @@ namespace Tramitador.Impl.Xml
         #endregion
 
 
+        public static XMLTransicion Transformar(ITransicion transicion)
+        {
+            XMLTransicion sol = null;
+
+            if (sol is XMLTransicion)
+            {
+                sol = transicion as XMLTransicion;
+            }
+            else
+            {
+                sol = new XMLTransicion();
+
+                sol.Descripcion = transicion.Descripcion;
+                sol.Destino = transicion.Destino;
+                sol.EsAutomatica = transicion.EsAutomatica;
+                sol.FechaTransicion = transicion.FechaTransicion;
+                sol.Flujograma = transicion.Flujograma;
+                sol.Origen = transicion.Origen;
+            }
+
+            return sol;
+        }
 
     }
 }

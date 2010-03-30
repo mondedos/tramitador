@@ -31,5 +31,26 @@ namespace Tramitador.Impl.Xml
         }
 
         #endregion
+
+        public static XMLEstado Tranformar(IEstado estado)
+        {
+            XMLEstado sol = null;
+
+            if (estado is XMLEstado)
+            {
+                sol = estado as XMLEstado;
+            }
+            else
+            {
+                sol = new XMLEstado();
+
+                sol.Descripcion = estado.Descripcion;
+                sol.EsEstadoFinal = estado.EsEstadoFinal;
+                sol.Estado = estado.Estado;
+                sol.Flujograma = estado.Flujograma;
+            }
+
+            return sol;
+        }
     }
 }
