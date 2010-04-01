@@ -8,7 +8,11 @@ namespace Tramitador.Impl.Xml
 {
     public class XMLFlujograma : IFlujograma
     {
-
+        public XMLFlujograma()
+        {
+            Entidad = string.Empty;
+            Nombre = string.Empty;
+        }
         private List<XMLTransicion> _transiciones = new List<XMLTransicion>();
         private List<XMLEstado> _estados = new List<XMLEstado>();
 
