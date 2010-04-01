@@ -108,6 +108,57 @@ namespace TestTramitador
             Assert.IsNull(actual);
             //Assert.Inconclusive("Verify the correctness of this test method.");
         }
+        /// <summary>
+        ///A test for ObtenerEstado
+        ///</summary>
+        [TestMethod()]
+        public void ObtenerEstadoTest2()
+        {
+            ITramitadorFactory target = CreateITramitadorFactory(); // TODO: Initialize to an appropriate value
+            IFlujograma flujograma = target.CreateFlujograma(); // TODO: Initialize to an appropriate value
+            int estado = 3; // TODO: Initialize to an appropriate value
+            IEstado expected = target.CreateEstado(flujograma); // TODO: Initialize to an appropriate value
+            expected.Estado = 3;
+            flujograma.Add(expected);
+            IEstado actual;
+            actual = target.ObtenerEstado(flujograma, estado);
+            Assert.IsNotNull(actual);
+            Assert.AreEqual<IEstado>(expected, actual);
+            //Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+        /// <summary>
+        ///A test for ObtenerEstado
+        ///</summary>
+        [TestMethod()]
+        public void ObtenerEstadoTest3()
+        {
+            ITramitadorFactory target = CreateITramitadorFactory(); // TODO: Initialize to an appropriate value
+            IFlujograma flujograma = target.CreateFlujograma(); // TODO: Initialize to an appropriate value
+            int estado = 7; // TODO: Initialize to an appropriate value
+            IEstado expected = target.CreateEstado(flujograma); // TODO: Initialize to an appropriate value
+            expected.Estado = 3;
+            flujograma.Add(expected);
+            IEstado actual;
+            actual = target.ObtenerEstado(flujograma, estado);
+            Assert.IsNull(actual);
+            //Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+        /// <summary>
+        ///A test for ObtenerEstado
+        ///</summary>
+        [TestMethod()]
+        public void ObtenerEstadoTest4()
+        {
+            ITramitadorFactory target = CreateITramitadorFactory(); // TODO: Initialize to an appropriate value
+            IFlujograma flujograma = target.CreateFlujograma(); // TODO: Initialize to an appropriate value
+            int estado = 3; // TODO: Initialize to an appropriate value
+            IEstado expected = target.CreateEstado(flujograma); // TODO: Initialize to an appropriate value
+            expected.Estado = 3;
+            IEstado actual;
+            actual = target.ObtenerEstado(flujograma, estado);
+            Assert.IsNull(actual);
+            //Assert.Inconclusive("Verify the correctness of this test method.");
+        }
 
         /// <summary>
         ///A test for CreateTransicion
@@ -167,9 +218,9 @@ namespace TestTramitador
             }
             catch (Tramitador.NoMismoFlujogramaException)
             {
-                
+
             }
-           
+
         }
 
         /// <summary>
