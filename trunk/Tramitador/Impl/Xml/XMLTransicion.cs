@@ -9,6 +9,10 @@ namespace Tramitador.Impl.Xml
 {
     public class XMLTransicion : ITransicion
     {
+        public XMLTransicion()
+        {
+            Descripcion = string.Empty;
+        }
         #region ITransicion Members
         [XmlIgnore]
         public IEstado Origen
