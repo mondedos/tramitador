@@ -1,6 +1,9 @@
 ﻿using System;
 namespace Tramitador
 {
+    /// <summary>
+    /// Factoría de tramitador
+    /// </summary>
     public interface ITramitadorFactory
     {
         /// <summary>
