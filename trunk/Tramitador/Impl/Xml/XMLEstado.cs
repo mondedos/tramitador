@@ -12,6 +12,7 @@ namespace Tramitador.Impl.Xml
 
         public string Descripcion { get; set; }
 
+        [XmlAttribute("IdEstado")]
         public int Estado { get; set; }
 
         [XmlIgnore]

@@ -58,10 +58,6 @@ namespace Tramitador.Impl.Xml
             }
         }
 
-        #endregion
-
-        #region IFlujograma Members
-
         [XmlIgnore]
         public ITransicion[] Transiciones
         {
@@ -69,6 +65,18 @@ namespace Tramitador.Impl.Xml
         }
 
         #endregion
+
+        public XMLEstado[] XMLEstados
+        {
+            get
+            {
+                return _estados.ToArray();
+            }
+            set
+            {
+                _estados = new List<XMLEstado>(value);
+            }
+        }
 
         public XMLTransicion[] XMLTransiciones
         {
@@ -90,13 +98,13 @@ namespace Tramitador.Impl.Xml
             return _transiciones.Contains(XMLTransicion.Transformar(transion));
         }
 
-        #endregion
-
-        #region IFlujograma Members
-
-
         public void Add(IEstado estado)
         {
+            foreach (var item in _estados)
+            {
+                if (item.Estado == estado.Estado)
+                    throw new ClaveDuplicadaException();
+            }
             _estados.Add(XMLEstado.Tranformar(estado));
         }
 
@@ -115,16 +123,15 @@ namespace Tramitador.Impl.Xml
             get { return _estados.ToArray(); }
         }
 
-        public XMLEstado[] XMLEstados
+
+        public ITransicion Remove(ITransicion transicion)
         {
-            get
-            {
-                return _estados.ToArray();
-            }
-            set
-            {
-                _estados = new List<XMLEstado>(value);
-            }
+            ITransicion sol = null;
+
+            if (_transiciones.Remove(XMLTransicion.Transformar(transicion)))
+                sol = transicion;
+
+            return sol;
         }
 
         #endregion

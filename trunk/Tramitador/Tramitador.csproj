@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClaveDuplicadaException.cs" />
     <Compile Include="EnventArgs\Delegados.cs" />
     <Compile Include="EnventArgs\PrecondicionTransicionCancelableEventArgs.cs" />
     <Compile Include="EnventArgs\TransicionEventArgs.cs" />
