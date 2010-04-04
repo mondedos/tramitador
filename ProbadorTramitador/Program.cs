@@ -13,18 +13,21 @@ namespace ProbadorTramitador
         {
             ITramitadorFactory fact = new XMLTramitadorFactory();
 
-            IFlujograma flujo = fact.ObtenerFlujograma("Mi entidad",0);
+            IFlujograma flujo =  fact.ObtenerFlujograma("Mi entidad",0);
 
-            //flujo.Nombre = "Mi flujo de pruebas";
-            //flujo.Entidad = "Mi entidad";
+            flujo.Nombre = "Mi flujo de pruebas";
+            flujo.Entidad = "Mi entidad";
 
 
             IEstado origen = fact.CreateEstado(flujo);
+            
 
             origen.Descripcion = "Estado inicial";
 
 
             IEstado destino = fact.CreateEstado(flujo);
+
+            destino.Estado = 1;
 
             destino.Descripcion = "Estado final";
 

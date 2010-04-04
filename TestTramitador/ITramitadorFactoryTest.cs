@@ -73,6 +73,8 @@ namespace TestTramitador
             actual = target.CreateFlujograma();
 
             Assert.IsNotNull(actual);
+            Assert.AreEqual<int>(actual.Entidad.Length, 0);
+            Assert.AreEqual<int>(actual.Nombre.Length, 0);
             //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
@@ -187,6 +189,7 @@ namespace TestTramitador
             Assert.IsNotNull(actual.Destino);
             Assert.AreEqual<IEstado>(actual.Origen, origen);
             Assert.AreEqual<IEstado>(actual.Destino, destino);
+            Assert.AreEqual<int>(actual.Descripcion.Length, 0);
         }
 
         /// <summary>
@@ -238,6 +241,7 @@ namespace TestTramitador
             actual = target.CreateEstado(flujograma);
             Assert.IsNotNull(actual);
             Assert.AreEqual<IFlujograma>(flujograma, actual.Flujograma);
+            Assert.AreEqual<int>(actual.Descripcion.Length, 0);
             //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 

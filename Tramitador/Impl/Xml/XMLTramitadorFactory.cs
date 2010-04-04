@@ -64,12 +64,22 @@ namespace Tramitador.Impl.Xml
 
         private void RellenarFlujogramasNull(IFlujograma solucion)
         {
+            SortedList<int, IEstado> estados = new SortedList<int, IEstado>();
+
+            foreach (var item in solucion.Estados)
+            {
+                estados.Add(item.Estado, item);
+            }
+
             foreach (var item in solucion.Transiciones)
             {
                 if (item.Flujograma == null)
                 {
                     item.Flujograma = solucion;
                 }
+                item.Origen = estados[item.Origen.Estado];
+                item.Destino = estados[item.Destino.Estado];
+
                 RellenarFlujogramasNull(solucion, item.Origen);
                 RellenarFlujogramasNull(solucion, item.Destino);
             }

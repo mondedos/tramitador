@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Tramitador.Impl.Xml
 {
-    public class XMLTransicion : ITransicion
+    public class XMLTransicion : ITransicion, IXmlSerializable
     {
         public XMLTransicion()
         {
@@ -82,5 +82,53 @@ namespace Tramitador.Impl.Xml
             return sol;
         }
 
+
+        #region IXmlSerializable Members
+
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+
+            reader.ReadToFollowing("origen");
+            if (reader.HasAttributes)
+            {
+                XMLOrigen = new XMLEstado() { Estado = Convert.ToInt32(reader.GetAttribute("ref")) };
+            }
+
+            reader.ReadToFollowing("destino");
+            if (reader.HasAttributes)
+            {
+                XMLDestino = new XMLEstado() { Estado = Convert.ToInt32(reader.GetAttribute("ref")) };
+            }
+
+            reader.ReadToFollowing("Descripcion");
+
+            Descripcion = reader.ReadElementString("Descripcion");
+
+            EsAutomatica = Convert.ToBoolean(reader.ReadElementString("EsAutomatica"));
+
+            FechaTransicion = Convert.ToDateTime(reader.ReadElementString("FechaTransicion"));
+        }
+
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteStartElement("orgien");
+            writer.WriteAttributeString("ref", Convert.ToString(Origen.Estado));
+            writer.WriteEndElement();
+
+            writer.WriteStartElement("destino");
+            writer.WriteAttributeString("ref", Convert.ToString(Destino.Estado));
+            writer.WriteEndElement();
+
+            writer.WriteElementString("Descripcion", Descripcion);
+            writer.WriteElementString("EsAutomatica", Convert.ToString(EsAutomatica));
+            writer.WriteElementString("FechaTransicion", Convert.ToString(FechaTransicion));
+        }
+
+        #endregion
     }
 }
