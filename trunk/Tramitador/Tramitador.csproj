@@ -52,6 +52,7 @@
     <Compile Include="IEstado.cs" />
     <Compile Include="IFlujograma.cs" />
     <Compile Include="IIdentificable.cs" />
+    <Compile Include="Impl\Xml\XMLProceso.cs" />
     <Compile Include="ITramitadorFactory.cs" />
     <Compile Include="Impl\Xml\XMLEstado.cs" />
     <Compile Include="Impl\Xml\XMLFlujograma.cs" />

@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Tramitador.Impl.Xml
 {
-    public class XMLTransicion : ITransicion, IXmlSerializable
+    public class XMLTransicion : ITransicion, IXmlSerializable, IEquatable<XMLTransicion>
     {
         public XMLTransicion()
         {
@@ -49,7 +49,7 @@ namespace Tramitador.Impl.Xml
         public bool Equals(ITransicion other)
         {
             return (!EsAutomatica || other.EsAutomatica) && (!other.EsAutomatica || EsAutomatica)
-                && Descripcion.Equals(other.Descripcion)
+                //&& Descripcion.Equals(other.Descripcion)
                 && FechaTransicion.Equals(other.FechaTransicion)
                 && Flujograma.Equals(other.Flujograma)
                 && Origen.Equals(other.Origen)
@@ -63,7 +63,7 @@ namespace Tramitador.Impl.Xml
         {
             XMLTransicion sol = null;
 
-            if (sol is XMLTransicion)
+            if (transicion is XMLTransicion)
             {
                 sol = transicion as XMLTransicion;
             }
@@ -129,6 +129,15 @@ namespace Tramitador.Impl.Xml
             writer.WriteElementString("Descripcion", Descripcion);
             writer.WriteElementString("EsAutomatica", Convert.ToString(EsAutomatica));
             writer.WriteElementString("FechaTransicion", Convert.ToString(FechaTransicion));
+        }
+
+        #endregion
+
+        #region IEquatable<XMLTransicion> Members
+
+        public bool Equals(XMLTransicion other)
+        {
+            return Equals(other as ITransicion);
         }
 
         #endregion

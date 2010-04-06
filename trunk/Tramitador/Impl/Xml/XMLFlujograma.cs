@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace Tramitador.Impl.Xml
 {
-    public class XMLFlujograma : IFlujograma, IXmlSerializable
+    public class XMLFlujograma : IFlujograma, IXmlSerializable,IEquatable<XMLFlujograma>
     {
         public XMLFlujograma()
         {
@@ -166,7 +166,7 @@ namespace Tramitador.Impl.Xml
                     item.Flujograma = this;
 
                     estados.Add(item.Estado, item);
-                    
+
                 } while (reader.Name.Equals("XMLEstado"));
 
                 XMLEstados = estados.Values.ToArray();
@@ -188,6 +188,7 @@ namespace Tramitador.Impl.Xml
 
                     trans.Origen = estados[trans.Origen.Estado];
                     trans.Destino = estados[trans.Destino.Estado];
+                    trans.Flujograma = this;
 
                     est.Add(trans);
                 } while (reader.Name.Equals("XMLTransicion"));
@@ -223,6 +224,49 @@ namespace Tramitador.Impl.Xml
                 serializer.Serialize(writer, item);
             }
             writer.WriteEndElement();
+        }
+
+        #endregion
+
+        public static XMLFlujograma Transformar(IFlujograma flujograma)
+        {
+            XMLFlujograma sol = null;
+
+            if (flujograma is XMLFlujograma)
+            {
+                sol = flujograma as XMLFlujograma;
+            }
+            else
+            {
+                sol = new XMLFlujograma();
+                sol.Entidad = flujograma.Entidad;
+
+                XMLEstado[] estados = new XMLEstado[flujograma.Estados.Length];
+                for (int i = 0; i < estados.Length; i++)
+                {
+                    estados[i] = XMLEstado.Tranformar(flujograma.Estados[i]);
+                }
+                sol.XMLEstados = estados;
+                sol.IdEntidad = flujograma.IdEntidad;
+                sol.Nombre = flujograma.Nombre;
+                XMLTransicion[] transiciones = new XMLTransicion[flujograma.Transiciones.Length];
+                for (int i = 0; i < transiciones.Length; i++)
+                {
+                    transiciones[i] = XMLTransicion.Transformar(flujograma.Transiciones[i]);
+                }
+                sol.XMLTransiciones = transiciones;
+            }
+
+            return sol;
+        }
+
+        #region IEquatable<XMLFlujograma> Members
+
+        public bool Equals(XMLFlujograma other)
+        {
+            IFlujograma otro = other;
+
+            return Equals(otro);
         }
 
         #endregion

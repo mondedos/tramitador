@@ -12,7 +12,13 @@ namespace Tramitador
     {
         IIdentificable EntidadIDentificable { get; set; }
         IFlujograma FlujogramaDef { get; set; }
+        /// <summary>
+        /// <see cref="Tramitador.IEstado"/> actual del proceso
+        /// </summary>
         IEstado EstadoActual { get; set; }
+        /// <summary>
+        /// <see cref="Tramitador.ITransicion"/> actual del proceso
+        /// </summary>
         ITransicion UltimaTransicion { get; set; }
         SortedList<DateTime, IProceso> ProcesosAnteriores { get;  }
     }
