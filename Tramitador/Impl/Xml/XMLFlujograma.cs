@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace Tramitador.Impl.Xml
 {
-    public class XMLFlujograma : IFlujograma
+    public class XMLFlujograma : IFlujograma, IXmlSerializable
     {
         public XMLFlujograma()
         {
@@ -47,7 +47,7 @@ namespace Tramitador.Impl.Xml
             if (!transicion.Flujograma.Equals(this))
                 throw new NoMismoFlujogramaException();
 
-            if(!_estados.Contains(XMLEstado.Tranformar(transicion.Origen)) 
+            if (!_estados.Contains(XMLEstado.Tranformar(transicion.Origen))
                 || !_estados.Contains(XMLEstado.Tranformar(transicion.Destino)))
                 throw new NoSuchElementException();
 
@@ -132,6 +132,77 @@ namespace Tramitador.Impl.Xml
                 sol = transicion;
 
             return sol;
+        }
+
+        #endregion
+
+        #region IXmlSerializable Members
+
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+
+            SortedList<int, XMLEstado> estados = new SortedList<int, XMLEstado>();
+
+            reader.ReadToFollowing("Nombre");
+            Nombre = reader.ReadElementString("Nombre");
+            IdEntidad = Convert.ToInt32(reader.ReadElementString("IdEntidad"));
+            Entidad = reader.ReadElementString("Entidad");
+
+            if (reader.Name.Equals("XMLEstados"))
+            {
+                reader.Read();
+                do
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(XMLEstado));
+
+
+                    XMLEstado item = (XMLEstado)serializer.Deserialize(reader);
+
+                    item.Flujograma = this;
+
+                    estados.Add(item.Estado, item);
+                    
+                } while (reader.Name.Equals("XMLEstado"));
+
+                XMLEstados = estados.Values.ToArray();
+
+                reader.Read();
+            }
+
+            if (reader.Name.Equals("XMLTransiciones"))
+            {
+                List<XMLTransicion> est = new List<XMLTransicion>();
+
+                reader.Read();
+                do
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(XMLTransicion));
+
+
+                    XMLTransicion trans = (XMLTransicion)serializer.Deserialize(reader);
+
+                    trans.Origen = estados[trans.Origen.Estado];
+                    trans.Destino = estados[trans.Destino.Estado];
+
+                    est.Add(trans);
+                } while (reader.Name.Equals("XMLTransicion"));
+
+                XMLTransiciones = est.ToArray();
+
+                reader.Read();
+            }
+
+            reader.ReadEndElement();
+        }
+
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
