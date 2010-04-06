@@ -50,7 +50,7 @@ namespace ProbadorTramitador
 
         static void trami_OnAntesTransicion(object sender, Tramitador.EnventArgs.PrecondicionTransicionCancelableEventArgs args)
         {
-            args.Cancelar = true;
+            //args.Cancelar = true;
         }
     }
 

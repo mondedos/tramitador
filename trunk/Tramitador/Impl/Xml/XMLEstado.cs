@@ -64,5 +64,21 @@ namespace Tramitador.Impl.Xml
         }
 
         #endregion
+
+        #region ICloneable<IEstado> Members
+
+        public IEstado Clone()
+        {
+            XMLEstado sol = new XMLEstado();
+
+            sol.EsEstadoFinal = EsEstadoFinal;
+            sol.Estado = Estado;
+            sol.Flujograma = Flujograma;
+            sol.Nombre = Nombre;
+
+            return sol;
+        }
+
+        #endregion
     }
 }

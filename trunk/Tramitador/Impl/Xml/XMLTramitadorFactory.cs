@@ -125,6 +125,9 @@ namespace Tramitador.Impl.Xml
         public void Almacenar(IProceso proecso)
         {
             XMLProceso xmlpro = XMLProceso.Transformar(proecso);
+
+
+            throw new NotImplementedException();
         }
 
         #endregion

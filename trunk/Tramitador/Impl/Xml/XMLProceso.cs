@@ -63,22 +63,40 @@ namespace Tramitador.Impl.Xml
         {
             XMLProceso sol = null;
 
-            //if (sol is XMLProceso)
-            //{
-            //    sol = proceso as XMLProceso;
-            //}
-            //else
-            //{
-            sol.EntidadIDentificable = proceso.EntidadIDentificable;
-            sol.EstadoActual = proceso.EstadoActual;
-            sol.FlujogramaDef = proceso.FlujogramaDef;
-            //sol.ProcesosAnteriores = proceso.ProcesosAnteriores;
-            sol.UltimaTransicion = proceso.UltimaTransicion;
-            //}
+            if (proceso is XMLProceso)
+            {
+                sol = proceso as XMLProceso;
+            }
+            else
+            {
+                sol = new XMLProceso();
+                sol.EntidadIDentificable = proceso.EntidadIDentificable;
+                sol.EstadoActual = proceso.EstadoActual;
+                sol.FlujogramaDef = proceso.FlujogramaDef;
+                //sol.ProcesosAnteriores = proceso.ProcesosAnteriores;
+                sol.UltimaTransicion = proceso.UltimaTransicion;
+            }
 
             return sol;
         }
 
 
+
+        #region ICloneable<IProceso> Members
+
+        public IProceso Clone()
+        {
+            XMLProceso sol = new XMLProceso();
+
+            sol.EntidadIDentificable = EntidadIDentificable;
+            sol.EstadoActual = EstadoActual.Clone();
+            sol.FlujogramaDef = FlujogramaDef;
+            //sol.ProcesosAnteriores = ProcesosAnteriores;
+            sol.UltimaTransicion = UltimaTransicion.Clone();
+
+            return sol;
+        }
+
+        #endregion
     }
 }

@@ -8,7 +8,7 @@ namespace Tramitador
     /// <summary>
     /// Representa un estado de un flujograma
     /// </summary>
-    public interface IEstado : IEquatable<IEstado>
+    public interface IEstado : IEquatable<IEstado>, ICloneable<IEstado>
     {
         /// <summary>
         /// Nombre del estado
