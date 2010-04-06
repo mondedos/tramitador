@@ -8,7 +8,7 @@ namespace Tramitador
     /// <summary>
     /// Representa una transicion de un flujograma
     /// </summary>
-    public interface ITransicion : IEquatable<ITransicion>
+    public interface ITransicion : IEquatable<ITransicion>, ICloneable<ITransicion>
     {
         /// <summary>
         /// Origen de la transicion

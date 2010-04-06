@@ -27,37 +27,54 @@ namespace Tramitador
         public ITransicion CurrentTransicion { get; private set; }
 
 
-        public IProceso Realizar(ITransicion transicon, IIdentificable identificable)
+        public IProceso Realizar(ITransicion transicion, IIdentificable identificable)
         {
-            if (!transicon.Origen.Flujograma.Equals(transicon.Destino.Flujograma))
+            if (!transicion.Origen.Flujograma.Equals(transicion.Destino.Flujograma))
                 throw new NoMismoFlujogramaException();
 
-            IProceso proecso = factoria.ObtenerProcesoActual(transicon.Flujograma, identificable);
+            IProceso proceso = factoria.ObtenerProcesoActual(transicion.Flujograma, identificable);
 
-            PrecondicionTransicionCancelableEventArgs precondicion = new PrecondicionTransicionCancelableEventArgs() { Transicion = transicon };
+            PrecondicionTransicionCancelableEventArgs precondicion = new PrecondicionTransicionCancelableEventArgs() { Transicion = transicion };
             if (OnAntesTransicion != null)
             {
                 OnAntesTransicion(this, precondicion);
             }
 
-            if (!proecso.FlujogramaDef.EsValido(transicon))
+            if (!proceso.FlujogramaDef.EsValido(transicion))
+                throw new InvalidOperationException("Transición no definida.");
+
+            if (proceso.UltimaTransicion != null && proceso.UltimaTransicion.Destino == null)
                 throw new NoSuchElementException();
+
+
+            if (proceso.UltimaTransicion != null && !proceso.UltimaTransicion.Destino.Equals(transicion.Origen))
+                throw new InvalidOperationException("El estado origen tiene que ser el mismo que el estado destino de la última transición.");
 
             //vemos si el usuario ha cancelado la operación
             if (!precondicion.Cancelar)
             {
+                //si hasta ahora todo va bien, realizamos el cambio de transicion
 
-                throw new NotImplementedException();
+                //primero guardamos la ultima transición en el histórico
+
+                if (proceso.UltimaTransicion != null)
+                {
+                    proceso.ProcesosAnteriores.Add(proceso.UltimaTransicion.FechaTransicion, proceso.Clone());
+                }
+
+                //actualizamos el proceso
+                proceso.UltimaTransicion = transicion;
+                proceso.EstadoActual = transicion.Destino;
 
 
-                factoria.Almacenar(proecso);
+                factoria.Almacenar(proceso);
 
                 if (OnDespuesTransicion != null)
                 {
-                    OnDespuesTransicion(this, new TransicionEventArgs() { Trancion = transicon });
+                    OnDespuesTransicion(this, new TransicionEventArgs() { Trancion = transicion });
                 }
             }
-            return proecso;
+            return proceso;
         }
     }
 }

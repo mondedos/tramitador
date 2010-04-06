@@ -141,5 +141,23 @@ namespace Tramitador.Impl.Xml
         }
 
         #endregion
+
+        #region ICloneable<ITransicion> Members
+
+        public ITransicion Clone()
+        {
+            XMLTransicion sol = new XMLTransicion();
+
+            sol.Descripcion = Descripcion;
+            sol.Destino = Destino.Clone();
+            sol.EsAutomatica = EsAutomatica;
+            sol.FechaTransicion = FechaTransicion;
+            sol.Flujograma = Flujograma;
+            sol.Origen = Origen.Clone();
+
+            return sol;
+        }
+
+        #endregion
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="EnventArgs\Delegados.cs" />
     <Compile Include="EnventArgs\PrecondicionTransicionCancelableEventArgs.cs" />
     <Compile Include="EnventArgs\TransicionEventArgs.cs" />
+    <Compile Include="ICloneable.cs" />
     <Compile Include="IEstado.cs" />
     <Compile Include="IFlujograma.cs" />
     <Compile Include="IIdentificable.cs" />

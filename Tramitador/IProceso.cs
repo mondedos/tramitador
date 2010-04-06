@@ -8,7 +8,7 @@ namespace Tramitador
     /// <summary>
     /// Representa el estado actual de la maquina de estados.
     /// </summary>
-    public interface IProceso
+    public interface IProceso: ICloneable<IProceso>
     {
         IIdentificable EntidadIDentificable { get; set; }
         IFlujograma FlujogramaDef { get; set; }
