@@ -145,7 +145,7 @@ namespace Tramitador.Impl.Xml
 
         public void ReadXml(System.Xml.XmlReader reader)
         {
-
+            //Lista ordenada que nos ayudará a resolver las referencias de tipo id
             SortedList<int, XMLEstado> estados = new SortedList<int, XMLEstado>();
 
             reader.ReadToFollowing("Nombre");
@@ -202,7 +202,27 @@ namespace Tramitador.Impl.Xml
 
         public void WriteXml(System.Xml.XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteElementString("Nombre", Nombre);
+            writer.WriteElementString("IdEntidad", Convert.ToString(IdEntidad));
+            writer.WriteElementString("Entidad", Entidad);
+
+            writer.WriteStartElement("XMLEstados");
+            foreach (var item in XMLEstados)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(XMLEstado));
+
+                serializer.Serialize(writer, item);
+            }
+            writer.WriteEndElement();
+
+            writer.WriteStartElement("XMLTransiciones");
+            foreach (var item in XMLTransiciones)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(XMLTransicion));
+
+                serializer.Serialize(writer, item);
+            }
+            writer.WriteEndElement();
         }
 
         #endregion
