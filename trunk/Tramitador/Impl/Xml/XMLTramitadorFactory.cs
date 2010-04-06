@@ -126,6 +126,7 @@ namespace Tramitador.Impl.Xml
         {
             XMLProceso xmlpro = XMLProceso.Transformar(proecso);
 
+            string nombreFichero = string.Format("{0} {1}.{2}", proecso.EntidadIDentificable.Entidad, proecso.FlujogramaDef.Nombre, "xml");
 
             throw new NotImplementedException();
         }
