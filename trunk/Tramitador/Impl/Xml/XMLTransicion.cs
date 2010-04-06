@@ -92,7 +92,7 @@ namespace Tramitador.Impl.Xml
 
         public void ReadXml(System.Xml.XmlReader reader)
         {
-
+            
             reader.ReadToFollowing("origen");
             if (reader.HasAttributes)
             {
@@ -112,6 +112,8 @@ namespace Tramitador.Impl.Xml
             EsAutomatica = Convert.ToBoolean(reader.ReadElementString("EsAutomatica"));
 
             FechaTransicion = Convert.ToDateTime(reader.ReadElementString("FechaTransicion"));
+
+            reader.ReadEndElement();
         }
 
         public void WriteXml(System.Xml.XmlWriter writer)

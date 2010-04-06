@@ -51,44 +51,12 @@ namespace Tramitador.Impl.Xml
 
                 if (solucion.IdEntidad != idEntidad)
                     solucion = null;
-                else
-                {
-                    RellenarFlujogramasNull(solucion);
-                }
+              
 
                 r.Close();
             }
 
             return solucion;
-        }
-
-        private void RellenarFlujogramasNull(IFlujograma solucion)
-        {
-            SortedList<int, IEstado> estados = new SortedList<int, IEstado>();
-
-            foreach (var item in solucion.Estados)
-            {
-                estados.Add(item.Estado, item);
-            }
-
-            foreach (var item in solucion.Transiciones)
-            {
-                if (item.Flujograma == null)
-                {
-                    item.Flujograma = solucion;
-                }
-                item.Origen = estados[item.Origen.Estado];
-                item.Destino = estados[item.Destino.Estado];
-
-                RellenarFlujogramasNull(solucion, item.Origen);
-                RellenarFlujogramasNull(solucion, item.Destino);
-            }
-        }
-
-        private void RellenarFlujogramasNull(IFlujograma solucion, IEstado iEstado)
-        {
-            if (iEstado.Flujograma == null)
-                iEstado.Flujograma = solucion;
         }
 
         public IEstado CreateEstado(IFlujograma flujograma)
