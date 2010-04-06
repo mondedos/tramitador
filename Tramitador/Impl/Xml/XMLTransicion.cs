@@ -118,7 +118,7 @@ namespace Tramitador.Impl.Xml
 
         public void WriteXml(System.Xml.XmlWriter writer)
         {
-            writer.WriteStartElement("orgien");
+            writer.WriteStartElement("origen");
             writer.WriteAttributeString("ref", Convert.ToString(Origen.Estado));
             writer.WriteEndElement();
 
