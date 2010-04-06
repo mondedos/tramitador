@@ -173,10 +173,10 @@ namespace TestTramitador
             flujograma.Nombre = "Flujograma pruebas";
             flujograma.Entidad = "Entidad pruebas";
             IEstado origen = target.CreateEstado(flujograma); // TODO: Initialize to an appropriate value
-            origen.Descripcion = "Descorigen";
+            origen.Nombre = "Descorigen";
             origen.Estado = 1;
             IEstado destino = target.CreateEstado(flujograma); // TODO: Initialize to an appropriate value
-            destino.Descripcion = "DesDestino";
+            destino.Nombre = "DesDestino";
             destino.EsEstadoFinal = true;
             destino.Estado = 2;
             ITransicion expected = null; // TODO: Initialize to an appropriate value
@@ -206,10 +206,10 @@ namespace TestTramitador
             flujograma2.Nombre = "Flujograma pruebas 2";
             flujograma2.Entidad = "Entidad pruebas 2";
             IEstado origen = target.CreateEstado(flujograma1); // TODO: Initialize to an appropriate value
-            origen.Descripcion = "Descorigen";
+            origen.Nombre = "Descorigen";
             origen.Estado = 1;
             IEstado destino = target.CreateEstado(flujograma2); // TODO: Initialize to an appropriate value
-            destino.Descripcion = "DesDestino";
+            destino.Nombre = "DesDestino";
             destino.EsEstadoFinal = true;
             destino.Estado = 2;
             ITransicion expected = null; // TODO: Initialize to an appropriate value
@@ -241,7 +241,7 @@ namespace TestTramitador
             actual = target.CreateEstado(flujograma);
             Assert.IsNotNull(actual);
             Assert.AreEqual<IFlujograma>(flujograma, actual.Flujograma);
-            Assert.AreEqual<int>(actual.Descripcion.Length, 0);
+            Assert.AreEqual<int>(actual.Nombre.Length, 0);
             //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 

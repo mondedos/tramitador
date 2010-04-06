@@ -10,7 +10,7 @@ namespace Tramitador.Impl.Xml
     {
         #region IEstado Members
 
-        public string Descripcion { get; set; }
+        public string Nombre { get; set; }
 
         [XmlAttribute("IdEstado")]
         public int Estado { get; set; }
@@ -27,7 +27,7 @@ namespace Tramitador.Impl.Xml
         public bool Equals(IEstado other)
         {
             return (!EsEstadoFinal || other.EsEstadoFinal) && (!other.EsEstadoFinal || EsEstadoFinal)
-                && Estado == other.Estado && Descripcion.Equals(other.Descripcion)
+                && Estado == other.Estado && Nombre.Equals(other.Nombre)
                 && Flujograma.Equals(other.Flujograma);
         }
 
@@ -45,7 +45,7 @@ namespace Tramitador.Impl.Xml
             {
                 sol = new XMLEstado();
 
-                sol.Descripcion = estado.Descripcion;
+                sol.Nombre = estado.Nombre;
                 sol.EsEstadoFinal = estado.EsEstadoFinal;
                 sol.Estado = estado.Estado;
                 sol.Flujograma = estado.Flujograma;

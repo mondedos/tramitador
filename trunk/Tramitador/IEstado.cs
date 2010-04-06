@@ -10,9 +10,21 @@ namespace Tramitador
     /// </summary>
     public interface IEstado : IEquatable<IEstado>
     {
-        string Descripcion { get; set; }
+        /// <summary>
+        /// Nombre del estado
+        /// </summary>
+        string Nombre { get; set; }
+        /// <summary>
+        /// Identificador del estado
+        /// </summary>
         int Estado { get; set; }
+        /// <summary>
+        /// Flujograma al que pertenece el estado
+        /// </summary>
         IFlujograma Flujograma { get; set; }
+        /// <summary>
+        /// Indica si el estado representa un estado final
+        /// </summary>
         bool EsEstadoFinal { get; set; }
 
     }
