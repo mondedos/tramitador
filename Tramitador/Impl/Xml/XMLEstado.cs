@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace Tramitador.Impl.Xml
 {
-    public class XMLEstado : IEstado
+    public class XMLEstado : IEstado, IEquatable<XMLEstado>
     {
         #region IEstado Members
 
@@ -53,5 +53,16 @@ namespace Tramitador.Impl.Xml
 
             return sol;
         }
+
+        #region IEquatable<XMLEstado> Members
+
+        public bool Equals(XMLEstado other)
+        {
+            IEstado otro = other;
+
+            return Equals(other as IEstado);
+        }
+
+        #endregion
     }
 }

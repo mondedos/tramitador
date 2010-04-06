@@ -26,9 +26,9 @@ namespace Tramitador
         /// <summary>
         /// Crea una transición entre dos estados
         /// </summary>
-        /// <param name="origen">Estado origen</param>
-        /// <param name="destino">Estado destino</param>
-        /// <returns></returns>
+        /// <param name="origen"><see cref="Tramitador.IEstado"/> origen</param>
+        /// <param name="destino"><see cref="Tramitador.IEstado"/> destino</param>
+        /// <returns>Nueva <see cref="Tramitador.ITransicion"/></returns>
         ITransicion CreateTransicion(IEstado origen, IEstado destino);
         /// <summary>
         /// Obtiene el estado i-esimo de un flujograma
@@ -38,5 +38,14 @@ namespace Tramitador
         /// <returns></returns>
         IEstado ObtenerEstado(IFlujograma flujograma, int estado);
         IFlujograma ObtenerFlujograma(string entidad, int idEntidad);
+        /// <summary>
+        /// Obtiene el proceso actual de un identificable
+        /// </summary>
+        /// <param name="iFlujograma"></param>
+        /// <param name="identificable"></param>
+        /// <returns></returns>
+        IProceso ObtenerProcesoActual(IFlujograma iFlujograma, IIdentificable identificable);
+
+        void Almacenar(IProceso proecso);
     }
 }

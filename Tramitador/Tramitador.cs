@@ -11,6 +11,7 @@ namespace Tramitador
         public event DAntesTransicion OnAntesTransicion;
         public event DDespuesTransicion OnDespuesTransicion;
 
+        protected ITramitadorFactory factoria = null;
         /// <summary>
         /// Obtiene un enumerado de las posibles transiciones definidas en un flujograma
         /// </summary>
@@ -26,9 +27,12 @@ namespace Tramitador
         public ITransicion CurrentTransicion { get; private set; }
 
 
-        public IProceso Realizar(ITransicion transicon)
+        public IProceso Realizar(ITransicion transicon, IIdentificable identificable)
         {
-            IProceso proecso = null;
+            if (!transicon.Origen.Flujograma.Equals(transicon.Destino.Flujograma))
+                throw new NoMismoFlujogramaException();
+
+            IProceso proecso = factoria.ObtenerProcesoActual(transicon.Flujograma, identificable);
 
             PrecondicionTransicionCancelableEventArgs precondicion = new PrecondicionTransicionCancelableEventArgs() { Transicion = transicon };
             if (OnAntesTransicion != null)
@@ -36,19 +40,17 @@ namespace Tramitador
                 OnAntesTransicion(this, precondicion);
             }
 
+            if (!proecso.FlujogramaDef.EsValido(transicon))
+                throw new NoSuchElementException();
+
             //vemos si el usuario ha cancelado la operación
             if (!precondicion.Cancelar)
             {
-                if (!transicon.Origen.Flujograma.Equals(transicon.Destino.Flujograma))
-                    throw new NoMismoFlujogramaException();
-
-
-
-
-
 
                 throw new NotImplementedException();
 
+
+                factoria.Almacenar(proecso);
 
                 if (OnDespuesTransicion != null)
                 {

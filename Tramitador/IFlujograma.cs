@@ -47,7 +47,7 @@ namespace Tramitador
         /// <returns>null si no existe previamente el <see cref="Tramitador.IEstado"/> en el flujograma</returns>
         IEstado Remove(IEstado estado);
         /// <summary>
-        /// Obtiene los estados del flujograma
+        /// Obtiene los <see cref="Tramitador.IEstado"/>s del flujograma
         /// </summary>
         IEstado[] Estados { get; }
     }

@@ -86,5 +86,47 @@ namespace Tramitador.Impl.Xml
                 throw new NoMismoFlujogramaException();
             return new XMLTransicion() { Destino = destino, Origen = origen, Flujograma = origen.Flujograma };
         }
+
+
+        #region ITramitadorFactory Members
+
+
+        public IProceso ObtenerProcesoActual(IFlujograma iFlujograma, IIdentificable identificable)
+        {
+            XMLProceso proceso = null;
+
+            string nombreFichero = string.Format("{0} {1}.{2}", identificable.Entidad, iFlujograma.Nombre, "xml");
+
+            if (!File.Exists(nombreFichero))
+            {
+                proceso = new XMLProceso();
+
+                proceso.EntidadIDentificable = identificable;
+                proceso.FlujogramaDef = iFlujograma;
+                
+            }
+            else
+            {
+                XmlSerializer s = new XmlSerializer(typeof(XMLProceso));
+
+
+
+                using (TextReader r = new StreamReader(nombreFichero))
+                {
+                    proceso = (XMLProceso)s.Deserialize(r);
+
+                    r.Close();
+                }
+            }
+
+            return proceso;
+        }
+
+        public void Almacenar(IProceso proecso)
+        {
+            XMLProceso xmlpro = XMLProceso.Transformar(proecso);
+        }
+
+        #endregion
     }
 }
