@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Tramitador
 {
+    /// <summary>
+    /// Representa el estado actual de la maquina de estados.
+    /// </summary>
     public interface IProceso
     {
         IIdentificable EntidadIDentificable { get; set; }
