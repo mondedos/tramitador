@@ -161,7 +161,7 @@ namespace Tramitador.Impl.Xml
                     XmlSerializer serializer = new XmlSerializer(typeof(XMLEstado));
 
 
-                    XMLEstado item = (XMLEstado)serializer.Deserialize(reader);
+                    XMLEstado item = serializer.Deserialize(reader) as XMLEstado;
 
                     item.Flujograma = this;
 

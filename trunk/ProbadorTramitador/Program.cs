@@ -34,7 +34,7 @@ namespace ProbadorTramitador
 
             //destino.Descripcion = "Estado final";
 
-            ITransicion tr = fact.CreateTransicion(flujo.Estados[0], flujo.Estados[1]);
+            ITransicion tr = fact.CreateTransicion(flujo.Estados[2], flujo.Estados[3]);
 
             trami.OnAntesTransicion += new Tramitador.EnventArgs.DAntesTransicion(trami_OnAntesTransicion);
 
