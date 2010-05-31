@@ -26,7 +26,7 @@ namespace Tramitador.Impl.Xml
 
                 // Serialization
                 XmlSerializer s = new XmlSerializer(typeof(XMLFlujograma));
-         
+
                 using (TextWriter w = new StreamWriter(nombreFichero))
                 {
 
@@ -42,8 +42,8 @@ namespace Tramitador.Impl.Xml
         public IFlujograma ObtenerFlujograma(string entidad, int idEntidad)
         {
             XmlSerializer s = new XmlSerializer(typeof(XMLFlujograma));
-            
-            IFlujograma solucion=null;
+
+            IFlujograma solucion = null;
 
             using (TextReader r = new StreamReader(string.Format("{0}.xml", entidad)))
             {
@@ -51,7 +51,7 @@ namespace Tramitador.Impl.Xml
 
                 if (solucion.IdEntidad != idEntidad)
                     solucion = null;
-              
+
 
                 r.Close();
             }
@@ -103,7 +103,7 @@ namespace Tramitador.Impl.Xml
 
                 proceso.EntidadIDentificable = identificable;
                 proceso.FlujogramaDef = iFlujograma;
-                
+
             }
             else
             {
@@ -117,6 +117,8 @@ namespace Tramitador.Impl.Xml
 
                     r.Close();
                 }
+
+                proceso.EntidadIDentificable = identificable;
             }
 
             return proceso;
@@ -128,7 +130,16 @@ namespace Tramitador.Impl.Xml
 
             string nombreFichero = string.Format("{0} {1}.{2}", proecso.EntidadIDentificable.Entidad, proecso.FlujogramaDef.Nombre, "xml");
 
-            throw new NotImplementedException();
+            XmlSerializer s = new XmlSerializer(typeof(XMLProceso));
+
+            using (TextWriter w = new StreamWriter(nombreFichero))
+            {
+                s.Serialize(w, xmlpro);
+
+                w.Close();
+            }
+
+            //throw new NotImplementedException();
         }
 
         #endregion

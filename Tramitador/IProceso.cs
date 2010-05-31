@@ -20,6 +20,6 @@ namespace Tramitador
         /// <see cref="Tramitador.ITransicion"/> actual del proceso
         /// </summary>
         ITransicion UltimaTransicion { get; set; }
-        SortedList<DateTime, IProceso> ProcesosAnteriores { get;  }
+        SortedList<DateTime, ITransicion> ProcesosAnteriores { get;  }
     }
 }
