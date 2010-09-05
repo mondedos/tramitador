@@ -10,6 +10,10 @@ namespace Tramitador.Impl.Xml
     public class XMLProceso : IProceso, IXmlSerializable
     {
 
+        private static Type xmlEstadoType = typeof(XMLEstado);
+        private static Type xmlTransicionType = typeof(XMLTransicion);
+        private static Type xmlFlujogramaType = typeof(XMLFlujograma);
+
         #region IProceso Members
         [XmlIgnore]
         public IIdentificable EntidadIDentificable { get; set; }
@@ -110,30 +114,29 @@ namespace Tramitador.Impl.Xml
 
         public void ReadXml(System.Xml.XmlReader reader)
         {
-           
-            reader.ReadToFollowing("XMLFlujograma");
-            
-            XmlSerializer serializer = new XmlSerializer(typeof(XMLFlujograma));
+
+            reader.ReadToFollowing(xmlFlujogramaType.Name);
+
+            XmlSerializer serializer = new XmlSerializer(xmlFlujogramaType);
 
             FlujogramaDef = serializer.Deserialize(reader) as IFlujograma;
 
-            
 
             //EntidadIDentificable.IdEntidad = FlujogramaDef.IdEntidad;
             //EntidadIDentificable.Entidad = FlujogramaDef.Entidad;
-            reader.ReadToFollowing("XMLEstado");
-            if (reader.Name.Equals("XMLEstado"))
+            reader.ReadToFollowing(xmlEstadoType.Name);
+            if (reader.Name.Equals(xmlEstadoType.Name))
             {
-                 serializer = new XmlSerializer(typeof(XMLEstado));
+                serializer = new XmlSerializer(xmlEstadoType);
 
-                 EstadoActual = serializer.Deserialize(reader) as IEstado;
+                EstadoActual = serializer.Deserialize(reader) as IEstado;
 
-                 EstadoActual.Flujograma = FlujogramaDef;
+                EstadoActual.Flujograma = FlujogramaDef;
             }
-            reader.ReadToFollowing("XMLTransicion");
-            if (reader.Name.Equals("XMLTransicion"))
+            reader.ReadToFollowing(xmlTransicionType.Name);
+            if (reader.Name.Equals(xmlTransicionType.Name))
             {
-                serializer = new XmlSerializer(typeof(XMLTransicion));
+                serializer = new XmlSerializer(xmlTransicionType);
 
                 UltimaTransicion = serializer.Deserialize(reader) as ITransicion;
                 UltimaTransicion.Flujograma = FlujogramaDef;
@@ -145,9 +148,9 @@ namespace Tramitador.Impl.Xml
             {
                 XmlReader hijos = reader.ReadSubtree();
 
-                serializer = new XmlSerializer(typeof(XMLTransicion));
+                serializer = new XmlSerializer(xmlTransicionType);
 
-                while (hijos.ReadToFollowing("XMLTransicion"))
+                while (hijos.ReadToFollowing(xmlTransicionType.Name))
                 {
 
                     ITransicion tran = serializer.Deserialize(hijos) as ITransicion;
@@ -165,18 +168,18 @@ namespace Tramitador.Impl.Xml
         {
             writer.WriteComment("Definición del flujograma que debe seguir el proceso");
 
-            XmlSerializer serializer = new XmlSerializer(typeof(XMLFlujograma));
+            XmlSerializer serializer = new XmlSerializer(xmlFlujogramaType);
 
             serializer.Serialize(writer, FlujogramaDef);
 
             writer.WriteComment("Estado Actual en el que se encuentra el proceso");
 
-            serializer = new XmlSerializer(typeof(XMLEstado));
+            serializer = new XmlSerializer(xmlEstadoType);
             serializer.Serialize(writer, EstadoActual);
 
             writer.WriteComment("Última transición que se realizó en el proceso");
 
-            serializer = new XmlSerializer(typeof(XMLTransicion));
+            serializer = new XmlSerializer(xmlTransicionType);
             serializer.Serialize(writer, UltimaTransicion);
 
 
@@ -191,7 +194,7 @@ namespace Tramitador.Impl.Xml
                 }
                 writer.WriteEndElement();
             }
-            
+
         }
 
         #endregion

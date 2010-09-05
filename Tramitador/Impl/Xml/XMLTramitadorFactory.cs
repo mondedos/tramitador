@@ -113,7 +113,7 @@ namespace Tramitador.Impl.Xml
 
                 using (TextReader r = new StreamReader(nombreFichero))
                 {
-                    proceso = (XMLProceso)s.Deserialize(r);
+                    proceso = s.Deserialize(r) as XMLProceso;
 
                     r.Close();
                 }
