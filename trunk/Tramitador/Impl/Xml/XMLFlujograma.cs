@@ -8,6 +8,9 @@ namespace Tramitador.Impl.Xml
 {
     public class XMLFlujograma : IFlujograma, IXmlSerializable,IEquatable<XMLFlujograma>
     {
+        private static Type xmlEstadoType = typeof(XMLEstado);
+        private static Type xmlTransicionType = typeof(XMLTransicion);
+
         public XMLFlujograma()
         {
             Entidad = string.Empty;
@@ -158,7 +161,7 @@ namespace Tramitador.Impl.Xml
                 reader.Read();
                 do
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(XMLEstado));
+                    XmlSerializer serializer = new XmlSerializer(xmlEstadoType);
 
 
                     XMLEstado item = serializer.Deserialize(reader) as XMLEstado;
@@ -167,7 +170,7 @@ namespace Tramitador.Impl.Xml
 
                     estados.Add(item.Estado, item);
 
-                } while (reader.Name.Equals("XMLEstado"));
+                } while (reader.Name.Equals(xmlEstadoType.Name));
 
                 XMLEstados = estados.Values.ToArray();
 
@@ -181,7 +184,7 @@ namespace Tramitador.Impl.Xml
                 reader.Read();
                 do
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(XMLTransicion));
+                    XmlSerializer serializer = new XmlSerializer(xmlTransicionType);
 
 
                     XMLTransicion trans = (XMLTransicion)serializer.Deserialize(reader);
@@ -191,7 +194,7 @@ namespace Tramitador.Impl.Xml
                     trans.Flujograma = this;
 
                     est.Add(trans);
-                } while (reader.Name.Equals("XMLTransicion"));
+                } while (reader.Name.Equals(xmlTransicionType.Name));
 
                 XMLTransiciones = est.ToArray();
 
