@@ -15,14 +15,15 @@ namespace ProbadorTramitador
 
             IFlujograma flujo = fact.ObtenerFlujograma("Mi entidad", 0);
 
-            Tramitador.Tramitador trami = new MyTramitador();
-
+            List<IEstado> estados = new List<IEstado>(fact.ObtenerEstados(flujo));
+            //IEstado estado=fact.ObtenerEstado(
+            //IFlujograma flujo = fact.CreateFlujograma();
 
             //flujo.Nombre = "Mi flujo de pruebas";
             //flujo.Entidad = "Mi entidad";
 
 
-            //IEstado origen = fact.CreateEstado(flujo);
+            IEstado origen = fact.CreateEstado(flujo);
 
 
             //origen.Descripcion = "Estado inicial";
