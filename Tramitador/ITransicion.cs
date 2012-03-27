@@ -34,5 +34,9 @@ namespace Tramitador
         /// Descripcion de la <see cref="Tramitador.ITransicion"/>
         /// </summary>
         string Descripcion { get; set; }
+        /// <summary>
+        /// Metodo a invocar en el objeto que se tramita
+        /// </summary>
+        string MetodoInvocar { get; set; }
     }
 }
